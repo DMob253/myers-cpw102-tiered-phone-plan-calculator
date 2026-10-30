@@ -1,41 +1,45 @@
-"""Extend your phone bill lab with premium membership and tiered pricing."""
+'''
+Phone Data Bill Calculator
+Asks for data used and base plan cost, then shows the usage category
+and the total monthly bill.
+'''
 
+# Constants
+DATA_LIMIT = 10      # GB of data included in the base plan
+OVERAGE_RATE = 2     # cost in dollars for each GB over the limit
+MODERATE_LIMIT = 5   # most GB over the limit that still counts as moderate
 
-def exceeds_data_limit(data_used):
-    """Return True when data_used exceeds 10 GB; otherwise return False.
-
-    Reuse your lab's Boolean-returning function here.
-    """
-    pass
-
-
-def get_overage_rate(data_used, has_premium):
-    """Return the numeric rate for every overage GB.
-
-    data_used is total usage in GB; has_premium is a Boolean.
-
-    Total data used           Regular    Premium
-    10 GB or less                0          0
-    More than 10, up to 20       2          1
-    More than 20                3          2
-
-    Use if-elif-else for tiers and a nested decision for membership.
-    Return the rate rather than printing it.
-    """
-    pass
-
+# Returns True if the data used is over the 10 GB limit, False otherwise
+def is_over_limit(gb_used):
+    return gb_used > DATA_LIMIT
 
 def main():
-    """Keep your lab's inputs, calculations, and messages together here.
+    # Inputs: user inputs their data they've already used and their base cost
+    gb_used = float(input("How much data did you use (GB)?: "))
+    base_cost = float(input("What is your base cost?: "))
 
-    Add the premium input and convert it to a Boolean.
-    Call exceeds_data_limit() in a decision.
-    Use get_overage_rate() instead of the fixed $2 rate.
-    Add the premium recommendation described in the README.
-    """
-    pass
+    # Starts the bill at the base plan cost
+    total_cost = base_cost
 
+    # Uses the Boolean function is_over_limit to decide if overage processing is needed
+    if is_over_limit(gb_used):
+        # Figures out how many GB the customer went over the limit
+        gb_over = gb_used - DATA_LIMIT
+        print(f"You are {gb_over:.1f} GB over your limit.")
 
-# Keep this guard: importing functions for tests must not prompt for input.
-if __name__ == "__main__":
-    main()
+        # Nested if: up to 5 GB over is moderate, more than 5 is high
+        if gb_over <= MODERATE_LIMIT:
+            print("Moderate extra usage.")
+        else:
+            print("High extra usage.")
+
+        # Adds $2 for each GB over the limit to base cost
+        total_cost = base_cost + gb_over * 2
+    else:
+        # Customer stayed within the limit, bill is just base cost
+        print("You are within your data limit.")
+
+    # Shows the total bill with 2 decimal places
+    print(f"Your total bill is: ${total_cost:.2f}")
+
+main()
