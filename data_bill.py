@@ -1,13 +1,13 @@
 '''
 Phone Data Bill Calculator
-Asks for data used and base plan cost, then shows the usage category
+Asks for data used, base plan cost and premium membership status then shows the usage category
 and the total monthly bill.
 '''
 # CONSTANTS
 DATA_LIMIT = 10      # GB LIMIT OF BASE PLAN
 MODERATE_LIMIT = 5   # GB OVER LIMIT THAT COUNTS AS MODERATE
 
-# RETURNS TRUE IS DATA USED IS OVER GB LIMIT, FALSE OTHERWISE
+# RETURNS TRUE IF DATA USED IS OVER GB LIMIT, FALSE OTHERWISE
 def is_over_limit(gb_used):
     return gb_used > DATA_LIMIT
 
@@ -58,9 +58,8 @@ def main():
         else:
             print("High extra usage.")
 
-        
+        # OVERAGE RATE CALCULATION
         overage_rate = get_overage_rate(gb_used, has_premium)
-
         overage_cost = gb_over * overage_rate
 
         # ADDS OVERAGE COST TO BASE PLAN
@@ -82,6 +81,5 @@ def main():
 
     # SHOWS TOTAL BILL
     print(f"Your total bill is: ${total_cost:.2f}")
-
 
 main()
